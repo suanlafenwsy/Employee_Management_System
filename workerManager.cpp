@@ -4,8 +4,47 @@
 #include "boss.h"
 
 WorkerManager::WorkerManager() {
-    this -> m_EmpNum = 0;
-    this -> m_EmpArray = NULL;
+    
+    ifstream ifs;
+
+    //ÎÄ¼ş²»´æÔÚ
+    ifs.open(FILENAME, ios :: in);
+
+    if(!ifs.is_open()){
+        cout << "File is not exist." << endl;
+
+        this -> m_EmpNum = 0;
+        this -> m_EmpArray = NULL;
+        this -> m_FileIsEmpty = true;
+
+        ifs.close();
+
+        return;
+    }
+
+    //ÎÄ¼ş´æÔÚ£¬µ«Êı¾İÎª¿Õ
+    char ch;
+    ifs >> ch; //´ÓÎÄ¼şÖĞ¶ÁÒ»¸ö×Ö·û
+    if(ifs.eof()) {
+        cout << "File is empty." << endl;
+
+        this -> m_EmpNum = 0;
+        this -> m_EmpArray = NULL;
+        this -> m_FileIsEmpty = true;
+
+        ifs.close();
+
+        return;
+    }
+
+    //ÎÄ¼ş´æÔÚÇÒÓĞÊı¾İ
+    int num = this -> get_EmpNum();
+    cout << "The number of person is: " << num << endl;
+    this -> m_EmpNum = num;
+    //¿ª±Ù¿Õ¼ä
+    this -> m_EmpArray = new Worker*[this -> m_EmpNum];
+    //½«ÎÄ¼şÖĞµÄÊı¾İ´æµ½Êı×éÖĞ
+    this -> init_Emp();
 }
 
 void WorkerManager::Show_Menu() {
@@ -27,8 +66,8 @@ void WorkerManager :: ExitSystem() {
     cout << " Welcome to use it again." << endl;
     system("pause");
 
-    //Cæ ‡å‡†åº“å‡½æ•° C++ç»§æ‰¿äº†
-    //ç«‹å³ç»“æŸæ•´ä¸ªç¨‹åº å¹¶è¿”å›çŠ¶æ€ç ç»™æ“ä½œç³»ç»Ÿ
+    //C±ê×¼¿âº¯Êı C++¼Ì³ĞÁË
+    //Á¢¼´½áÊøÕû¸ö³ÌĞò ²¢·µ»Ø×´Ì¬Âë¸ø²Ù×÷ÏµÍ³
     exit(0);
 }
 
@@ -84,6 +123,7 @@ void WorkerManager :: Add_Emp() {
 
         cout << "Successfully added " << addNum << "employees." << endl;
 
+        this -> m_FileIsEmpty = false;
         this -> save();
 
         system("pause");
@@ -105,6 +145,52 @@ void WorkerManager :: save() {
     }
 
     ofs.close();
+}
+
+int WorkerManager :: get_EmpNum() {
+    ifstream ifs;
+    ifs.open(FILENAME, ios :: in);
+
+    int id;
+    string name;
+    int dId;
+
+    int num = 0;
+
+    while(ifs >> id && ifs >> name && ifs >> dId) num++;
+
+    ifs.close();
+
+    return num;
+}
+
+void WorkerManager :: init_Emp() {
+    ifstream ifs;
+    ifs.open(FILENAME, ios :: in);
+
+    int id;
+    string name;
+    int dId;
+
+    int index = 0;
+
+    while(ifs >> id && ifs >> name && ifs >> dId) {
+        Worker * worker = NULL;
+
+        if(dId == 1) {
+            worker = new Employee(id, name, dId);
+        }
+        else if(dId == 2) {
+            worker = new Manager(id, name, dId);
+        }
+        else {
+            worker = new Boss(id, name, dId);
+        }
+
+        this -> m_EmpArray[index] = worker;
+        index++;
+    }
+    ifs.close();
 }
 
 WorkerManager::~WorkerManager() {

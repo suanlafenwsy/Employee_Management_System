@@ -13,6 +13,7 @@ public:
 
     int m_EmpNum; //记录职工人数
     Worker ** m_EmpArray; //职工数组指针
+    bool m_FileIsEmpty; //记录文件是否为空
 
     //构造函数
     WorkerManager();
@@ -24,6 +25,10 @@ public:
     void Add_Emp();
 
     void save();
+
+    int get_EmpNum();
+
+    void init_Emp();
 
     //析构函数
     ~WorkerManager();
