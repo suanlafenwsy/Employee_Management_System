@@ -11,7 +11,6 @@ WorkerManager::WorkerManager() {
     ifs.open(FILENAME, ios :: in);
 
     if(!ifs.is_open()){
-        cout << "File is not exist." << endl;
 
         this -> m_EmpNum = 0;
         this -> m_EmpArray = NULL;
@@ -26,7 +25,6 @@ WorkerManager::WorkerManager() {
     char ch;
     ifs >> ch; //从文件中读一个字符
     if(ifs.eof()) {
-        cout << "File is empty." << endl;
 
         this -> m_EmpNum = 0;
         this -> m_EmpArray = NULL;
@@ -39,7 +37,6 @@ WorkerManager::WorkerManager() {
 
     //文件存在且有数据
     int num = this -> get_EmpNum();
-    cout << "The number of person is: " << num << endl;
     this -> m_EmpNum = num;
     //开辟空间
     this -> m_EmpArray = new Worker*[this -> m_EmpNum];
