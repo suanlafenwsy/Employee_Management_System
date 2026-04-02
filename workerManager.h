@@ -1,7 +1,10 @@
 #pragma once //防止头文件重复包含 效果和#ifndef #define #endif一样
 #include <iostream>
+#include <fstream>
 
 using namespace std;
+
+#define FILENAME "empFile.txt"
 
 #include "worker.h"
 
@@ -19,6 +22,8 @@ public:
     void ExitSystem();
 
     void Add_Emp();
+
+    void save();
 
     //析构函数
     ~WorkerManager();

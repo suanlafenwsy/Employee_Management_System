@@ -84,6 +84,8 @@ void WorkerManager :: Add_Emp() {
 
         cout << "Successfully added " << addNum << "employees." << endl;
 
+        this -> save();
+
         system("pause");
         system("cls");
     }
@@ -92,5 +94,22 @@ void WorkerManager :: Add_Emp() {
     }
 }
 
+void WorkerManager :: save() {
+    ofstream ofs;
+    ofs.open(FILENAME, ios :: out);
+
+    for (int i = 0; i < this -> m_EmpNum; i++) {
+        ofs << this -> m_EmpArray[i] -> m_Id << " "
+            << this -> m_EmpArray[i] -> m_Name << " "
+            << this -> m_EmpArray[i] -> m_DeptId << endl;
+    }
+
+    ofs.close();
+}
+
 WorkerManager::~WorkerManager() {
+    if (this -> m_EmpArray != NULL) {
+        delete[] this -> m_EmpArray;
+        this -> m_EmpArray = NULL;
+    }
 }
