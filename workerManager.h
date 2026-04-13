@@ -30,6 +30,8 @@ public:
 
     void init_Emp();
 
+    void Show_Emp();
+
     //析构函数
     ~WorkerManager();
 };

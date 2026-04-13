@@ -12,6 +12,8 @@ WorkerManager::WorkerManager() {
 
     if(!ifs.is_open()){
 
+        //cout << "The file does not exist." << endl;
+
         this -> m_EmpNum = 0;
         this -> m_EmpArray = NULL;
         this -> m_FileIsEmpty = true;
@@ -26,6 +28,8 @@ WorkerManager::WorkerManager() {
     ifs >> ch; //从文件中读一个字符
     if(ifs.eof()) {
 
+        //cout << "The file is empty." << endl;
+
         this -> m_EmpNum = 0;
         this -> m_EmpArray = NULL;
         this -> m_FileIsEmpty = true;
@@ -37,11 +41,16 @@ WorkerManager::WorkerManager() {
 
     //文件存在且有数据
     int num = this -> get_EmpNum();
+
+    //cout << "The number of employee is:" << num << endl;
+
     this -> m_EmpNum = num;
     //开辟空间
     this -> m_EmpArray = new Worker*[this -> m_EmpNum];
     //将文件中的数据存到数组中
     this -> init_Emp();
+
+    this -> m_FileIsEmpty = false;
 }
 
 void WorkerManager::Show_Menu() {
@@ -188,6 +197,22 @@ void WorkerManager :: init_Emp() {
         index++;
     }
     ifs.close();
+}
+
+void WorkerManager :: Show_Emp() {
+
+    if(this -> m_FileIsEmpty) {
+        cout << "The file does not exist or the record is empty." << endl;
+    }
+
+    else {
+        for (int i = 0; i < m_EmpNum; i++) {
+            this -> m_EmpArray[i] -> showInfo();
+        }
+    }
+
+    system("pause");
+    system("cls");
 }
 
 WorkerManager::~WorkerManager() {
