@@ -9,7 +9,7 @@ Boss :: Boss(int id, string name, int dId){
 void Boss :: showInfo(){
     cout << "Employee Number:" << this -> m_Id
          << "\tEmployee Name:" << this -> m_Name
-         << "\ttitle:" << this->getDeptName()
+         << "\ttitle:" << this -> getDeptName()
          << "\tManage all company affairs." << endl;
     return;
 }

@@ -9,7 +9,7 @@ Employee :: Employee(int id, string name, int dId) {
 void Employee :: showInfo() {
     cout << "Employee Number:" << this -> m_Id
          << "\tEmployee Name:" << this -> m_Name
-         << "\ttitle:" << this->getDeptName()
+         << "\ttitle:" << this -> getDeptName()
          << "\tComplete the tasks assigned by the manager" << endl;
     return;
 }

@@ -53,6 +53,18 @@ int main() {
     // Worker w3 = *p2;  // 编译错误！类型不匹配
 }
 ```  
-指针存储的是内存地址，而地址的范围决定了指针的大小，也就是说**指针本身在内存中的占用空间大小，与指向的对象类型无关，只取决于系统位数。**
+指针存储的是内存地址，而地址的范围决定了指针的大小，也就是说**指针本身在内存中的占用空间大小，与指向的对象类型无关，只取决于系统位数。**    
+```
+int newSize = this -> m_EmpNum + addNum;
+        Worker ** newSpace = new Worker*[newSize];
+
+        if(this -> m_EmpArray != NULL) {
+            for(int i = 0; i < this -> m_EmpNum; i++) {
+                newSpace[i] = this -> m_EmpArray[i];
+            }
+        }
+```  
+这段代码中，newSpace本身是一个指针变量（在栈上），它指向堆上的一块内存，这块内存是一个数组，数组的元素类型是Worker*（指向Worker的指针），但是**可以用下标newSpace[i]访问数组元素。**  
+
 
 - 职工管理系统.cpp

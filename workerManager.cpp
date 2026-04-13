@@ -114,10 +114,13 @@ void WorkerManager :: Add_Emp() {
             switch(dSelect) {
                 case 1:
                     worker = new Employee(id, name, 1);
+                    break;
                 case 2:
                     worker = new Manager(id, name, 2);
+                    break;
                 case 3:
                     worker = new Boss(id, name, 3);
+                    break;
             }
 
             newSpace[this -> m_EmpNum + i] = worker;
@@ -132,12 +135,13 @@ void WorkerManager :: Add_Emp() {
         this -> m_FileIsEmpty = false;
         this -> save();
 
-        system("pause");
-        system("cls");
     }
     else {
         cout << "input error" << endl;
     }
+
+    system("pause");
+    system("cls");
 }
 
 void WorkerManager :: save() {
@@ -207,10 +211,121 @@ void WorkerManager :: Show_Emp() {
 
     else {
         for (int i = 0; i < m_EmpNum; i++) {
+            
+            //利用多态调用接口
             this -> m_EmpArray[i] -> showInfo();
         }
     }
 
+    system("pause");
+    system("cls");
+}
+
+int WorkerManager :: IsExist(int id) {
+    int index = -1;
+    
+    for (int i = 0; i < this -> m_EmpNum; i++) {
+        if(this -> m_EmpArray[i] -> m_Id == id) {
+            index = i;
+            break;
+        }
+    }
+
+    return index;
+}
+
+void WorkerManager :: Del_Emp() {
+
+    if(this -> m_FileIsEmpty) {
+        cout << "The file does not exist or is empty." << endl;
+    }
+
+    else {
+        cout << "Please enter the employee ID you wish to delete：" << endl;
+
+        int id;
+        cin >> id;
+
+        int index = IsExist(id);
+
+        if(index != -1) {
+
+            //通过数据前移的方式达到删除职工的效果
+            for(int i = index; i < this -> m_EmpNum - 1; i++) {
+                this -> m_EmpArray[i] = this -> m_EmpArray[i + 1];
+            }
+            this -> m_EmpNum -= 1;
+
+            this -> save();
+
+            cout << "Deletion successful!" << endl;
+        }
+        else {
+            cout << "Deletion failed,the employee could not be found." << endl;
+        }
+    }
+    system("pause");
+    system("cls");
+}
+
+void WorkerManager :: Mod_Emp() {
+
+    if(this -> m_FileIsEmpty) {
+        cout << "The file does not exist or is empty." << endl;
+    }
+
+    else {
+
+        int id;
+
+        cout << "Please enter the employee ID you wish to modify：" << endl;
+        cin >> id;
+
+        int ret = this -> IsExist(id);
+
+        if(ret != -1) {
+            delete this -> m_EmpArray[ret];
+
+            int newId;
+            string newName;
+            int dSelect;
+
+            cout << "Please enter the new employee's ID:" << endl;
+            cin >> newId;
+            cout << "Please enter the new employee's name:" << endl;
+            cin >> newName;
+            cout << "Please enter the new employee's job title:" << endl;
+            cout << "1.employee" << endl;
+            cout << "2.manager" << endl;
+            cout << "3.boss" << endl;
+            cin >> dSelect;
+
+            Worker *worker = NULL;
+
+            switch(dSelect) {
+            case 1:
+                worker = new Employee(newId, newName, dSelect);
+                break;
+            case 2:
+                worker = new Manager(newId, newName, dSelect);
+                break;
+            case 3:
+                worker = new Boss(newId, newName, dSelect);
+                break;
+            default:
+                break;
+            }
+
+            this -> m_EmpArray[ret] = worker;
+
+            cout << "Modification successful!" << endl;
+
+            this -> save();
+        }
+        else {
+            cout << "Modification failed, no such person found." << endl;
+        }
+    }
     system("pause");
     system("cls");
 }

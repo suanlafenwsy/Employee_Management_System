@@ -31,6 +31,13 @@ public:
     void init_Emp();
 
     void Show_Emp();
+    
+    //根据id判断该职工是否存在
+    int IsExist(int id);
+
+    void Del_Emp();
+
+    void Mod_Emp();
 
     //析构函数
     ~WorkerManager();

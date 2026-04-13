@@ -9,7 +9,7 @@ Manager :: Manager(int id, string name, int dId){
 void Manager :: showInfo(){
     cout << "Employee Number:" << this -> m_Id
          << "\tEmployee Name:" << this -> m_Name
-         << "\ttitle:" << this->getDeptName()
+         << "\ttitle:" << this -> getDeptName()
          << "\tComplete the tasks assigned by the boss and then distribute the tasks to the employees." << endl;
     return;
 }
