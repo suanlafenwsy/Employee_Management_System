@@ -39,6 +39,8 @@ public:
 
     void Mod_Emp();
 
+    void Find_Emp();
+
     //析构函数
     ~WorkerManager();
 };

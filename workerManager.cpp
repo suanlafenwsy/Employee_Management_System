@@ -330,6 +330,59 @@ void WorkerManager :: Mod_Emp() {
     system("cls");
 }
 
+void WorkerManager :: Find_Emp() {
+    if(this -> m_FileIsEmpty) {
+        cout << "The file does not exist or is empty." << endl;
+    }
+    else {
+        int select = 0;
+
+        cout << "Please enter the search method:" << endl;
+        cout << "1.Search by employee ID" << endl;
+        cout << "2.Search by employee NAME" << endl;
+
+        cin >> select;
+
+        if(select == 1) {
+            int id;
+            cout << "Please enter the ID you want to search for:" << endl;
+            cin >> id;
+
+            int ret = this -> IsExist(id);
+            if(ret != -1) {
+                cout << "Search successful! The employee's information is as follows:" << endl;
+                this -> m_EmpArray[ret] -> showInfo();
+            }
+            else {
+                cout << "Search failed, no such person found." << endl;
+            }
+        }
+        else if(select == 2) {
+            string name;
+            cout << "Please enter the NAME you want to search for:" << endl;
+            cin >> name;
+            bool flag = 0;
+
+            for (int i = 0; i < m_EmpNum; i++) {
+                if(m_EmpArray[i] -> m_Name == name){
+                    flag = 1;
+
+                    cout << "Search successful! The employee's information is as follows:" << endl;
+                    this -> m_EmpArray[i] -> showInfo();
+                }
+            }
+            if(!flag) {
+                cout << "Search failed, no such person found." << endl;
+            }
+        }
+        else {
+            cout << "input error" << endl;
+        }
+    }
+    system("pause");
+    system("cls");
+}
+
 WorkerManager::~WorkerManager() {
     if (this -> m_EmpArray != NULL) {
         delete[] this -> m_EmpArray;
