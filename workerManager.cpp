@@ -383,6 +383,49 @@ void WorkerManager :: Find_Emp() {
     system("cls");
 }
 
+void WorkerManager :: Sort_Emp() {
+    if(this -> m_FileIsEmpty) {
+        cout << "The file does not exist or is empty." << endl;
+        system("pause");
+        system("cls");
+    }
+    else {
+
+        cout << "Please select sorting method:" << endl;
+        cout << "1.Sort by employee ID in ascending order." << endl;
+        cout << "2.Sort by employee ID in descending order." << endl;
+
+        int select = 0;
+        cin >> select;
+
+        for(int i = 0; i < m_EmpNum; i++) {
+            int minOrMax = i;
+            for(int j = i + 1; j < m_EmpNum; j++) {
+                if(select == 1) {
+                    if(m_EmpArray[minOrMax] -> m_Id > m_EmpArray[j] -> m_Id) {
+                        minOrMax = j;
+                    }
+                }
+                //输入有误当作降序处理
+                else{
+                    if(m_EmpArray[minOrMax] -> m_Id < m_EmpArray[j] -> m_Id) {
+                        minOrMax = j;
+                    }
+                }
+            }
+            if(i != minOrMax) {
+                Worker * temp = m_EmpArray[i];
+                m_EmpArray[i] = m_EmpArray[minOrMax];
+                m_EmpArray[minOrMax] = temp;
+            }
+        }
+
+        cout << "Sorting successful, the sorted result is:" << endl;
+        this -> save();
+        this -> Show_Emp();
+    }
+}
+
 WorkerManager::~WorkerManager() {
     if (this -> m_EmpArray != NULL) {
         delete[] this -> m_EmpArray;

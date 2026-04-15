@@ -41,6 +41,8 @@ public:
 
     void Find_Emp();
 
+    void Sort_Emp();
+
     //析构函数
     ~WorkerManager();
 };
