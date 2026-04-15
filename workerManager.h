@@ -43,6 +43,8 @@ public:
 
     void Sort_Emp();
 
+    void Clean_File();
+
     //析构函数
     ~WorkerManager();
 };

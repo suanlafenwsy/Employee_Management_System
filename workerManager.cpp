@@ -426,8 +426,46 @@ void WorkerManager :: Sort_Emp() {
     }
 }
 
+void WorkerManager :: Clean_File() {
+    cout << "Confirm clear?" << endl;
+    cout << "1.Yes" << endl;
+    cout << "2.No" << endl;
+
+    int select = 0;
+    cin >> select;
+
+    if(select == 1) {
+        //打开模式ios :: trunc 如果文件存在就删除并重新创建
+        ofstream ofs(FILENAME, ios :: trunc);
+        ofs.close();
+
+        if(this -> m_EmpArray != NULL) {
+
+            for(int i = 0; i < this -> m_EmpNum; i++) {
+                if(this -> m_EmpArray[i] != NULL) {
+                    delete this -> m_EmpArray[i];
+                }
+            }
+
+            this -> m_EmpNum = 0;
+            delete[] this -> m_EmpArray;
+            this -> m_EmpArray = NULL;
+            this -> m_FileIsEmpty = true;
+        }
+
+        cout << "Cleared successfully." << endl;
+    }
+    system("pause");
+    system("cls");
+}
+
 WorkerManager::~WorkerManager() {
     if (this -> m_EmpArray != NULL) {
+        for(int i = 0; i < this -> m_EmpNum; i++) {
+            if(this -> m_EmpArray[i] != NULL) {
+                delete this -> m_EmpArray[i];
+            }
+        }
         delete[] this -> m_EmpArray;
         this -> m_EmpArray = NULL;
     }
